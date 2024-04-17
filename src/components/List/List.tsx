@@ -13,12 +13,15 @@ const Btn =styled.div`
     left:350px;
     top:-50px;
     font-size:1.5rem;
+    cursor:pointer;
 `
-export default function List({ isLoading, isPost, postList, AddPost }: postType) {
+export default function List({ isLoading, isPost, postList, AddPost,OpenModal }: postType) {
+   
+    
     return (
         <>
 
-            <Btn onClick={AddPost}>
+            <Btn onClick={OpenModal}>
                 고민 털어놓기
             </Btn>
             <StlyePost postList={postList} />

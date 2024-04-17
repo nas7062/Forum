@@ -1,12 +1,19 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Header from "../Header/Header";
 import List from "../List/List";
+import Modal from "../Modal/Modal";
+import styled from "styled-components";
+
 
 export interface postType {
     isLoading: boolean;
     isPost:boolean;
     postList:ListType[]
     AddPost :any;
+    OpenModal :()=>void;
+}
+export interface ModalType{
+    OpenModal :()=>void;
 }
 export interface ListType {
     id:number;
@@ -25,7 +32,7 @@ export default function Home()
     const [isLoading,setisLoading] = useState<boolean>(false);
     const [isPost,setisPost] = useState<boolean>(false);
     const [postList,setpostList] = useState<ListType[]>(initialPostList);
-
+    const [isModal,setisModal] = useState<boolean>(false);
     const AddPost = () =>{
         const newPost: ListType = {
             id: postList.length + 1,
@@ -36,11 +43,17 @@ export default function Home()
             ...postList, newPost
         ]);
     };
-    console.log(postList);
+    const OpenModal= useCallback(()=>
+    {  
+        setisModal(!isModal);
+    },[isModal]);
+
+    console.log(isModal);
     return(
         <>
         <Header/>
-        <List isLoading={isLoading} isPost = {isPost} postList = {postList} AddPost= {AddPost}/>
+        <List isLoading={isLoading} isPost = {isPost} postList = {postList} AddPost= {AddPost} OpenModal={OpenModal} />
+        {isModal && <Modal OpenModal={OpenModal} />}
         </>
     );
 }

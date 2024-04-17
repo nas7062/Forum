@@ -6,6 +6,7 @@ border-collapse: collapse;
 width: 50%;
 text-align:center;
 position:relative;
+
 left:20%;
  & > th,td{
     padding:10px 90px;
