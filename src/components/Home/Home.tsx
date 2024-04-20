@@ -6,54 +6,81 @@ import styled from "styled-components";
 
 
 export interface postType {
-    isLoading: boolean;
-    isPost:boolean;
+    
     postList:ListType[]
-    AddPost :any;
     OpenModal :()=>void;
+    AddReple :(id:number,reples:string)=>void
 }
 export interface ModalType{
     OpenModal :()=>void;
+    AddPost :(title:string,desciprt:string)=>void;
 }
 export interface ListType {
     id:number;
     title:string;
-    name?:string;
-    
+    name?:string;   
+    descript?:string
+    reples? :string[]
+}   
+export interface RepleType {
+    reples :string
 }
-
 export default function Home()
 {   
     const initialPostList :ListType[] = [
-        {id : 1, title : "리액트 공부는 재미있어.", name: "민석"},
-        {id : 2, title : "프론트 공부 열심히 해.", name: "민석"}, 
-        {id : 3, title : "파이팅^^.", name: "민석"},
+        {id : 1, title : "프론트 공부 열심히 해.", name: "민석", descript:`저는 일단 서울에서 1살 된 아기를 키우고 있는 아빠고 저는 회사를 다니고 있습니다.
+        와이프는 공무원이고 현재 육아 휴직을 쓰고 있고요...
+        
+        그런데 이번에 회사에서 제가 하고 있는 프로젝트를 진행하는 부서 자체가 사라질 거라는 이야기를 들었고
+        (임원진께서 직접 전달 한 내용이라 거의 확실하다는 군요)
+        부서에 있는 사람들 대부분이 2-3달 사이에 정리 해고 혹은 자진 퇴사할(시킬) 거라는 이야기였습니다.
+        문제는 여기서 시작입니다...
+        
+       
+       `,reples :["고생하시네요","안타까워요","asdasdasd"]  }, 
+        {id : 2, title : "프론트 공부 열심히 해.", name: "민석", descript:"asdasdasdasdasdasd" ,reples :["고생하시네요","안타까워요","asdasdasd"]}, 
+        {id : 3, title : "프론트 공부 열심히 해", name: "민석" ,descript :"asdasdasdasdasdasd", reples :["고생하시네요","안타까워요","asdasdasd"]},
     ];
-    const [isLoading,setisLoading] = useState<boolean>(false);
-    const [isPost,setisPost] = useState<boolean>(false);
-    const [postList,setpostList] = useState<ListType[]>(initialPostList);
+    
+    const [postList,setpostList] = useState<ListType[]>(JSON.parse(localStorage.getItem("PostData") ||'{}')&&  initialPostList);
     const [isModal,setisModal] = useState<boolean>(false);
-    const AddPost = () =>{
+    
+    const AddPost = (title:string,descript:string) =>{
         const newPost: ListType = {
             id: postList.length + 1,
-            title:`very good ${postList.length+1}`,
-             
+            title:`${title}`,
+            descript:`${descript}`,
+           
         };
         setpostList((postList)=>[
             ...postList, newPost
         ]);
+        localStorage.setItem("PostData", JSON.stringify([...postList,newPost]));
     };
+    const AddReple = (id:number ,reples:string)=>{
+        const targetPostIndex = postList.findIndex(post => post.id === id);
+    
+    if (targetPostIndex !== -1) { // 해당 ID를 가진 게시물을 찾은 경우
+        // 기존의 게시물을 복사합니다.
+        const newReple = [...postList];
+        // 해당 게시물에 댓글을 추가합니다.
+        newReple[targetPostIndex].reples = [...(newReple[targetPostIndex].reples || []), reples];
+        
+        setpostList(newReple);
+        localStorage.setItem("PostData", JSON.stringify([...postList,newReple]));
+    }
+    }
     const OpenModal= useCallback(()=>
     {  
         setisModal(!isModal);
     },[isModal]);
 
-    console.log(isModal);
+    console.log(postList);
     return(
         <>
         <Header/>
-        <List isLoading={isLoading} isPost = {isPost} postList = {postList} AddPost= {AddPost} OpenModal={OpenModal} />
-        {isModal && <Modal OpenModal={OpenModal} />}
+        <List  postList = {postList}  OpenModal={OpenModal} AddReple ={AddReple}/>
+        {isModal && <Modal OpenModal={OpenModal} AddPost={AddPost} />}
         </>
     );
 }

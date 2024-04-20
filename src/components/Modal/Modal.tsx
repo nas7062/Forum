@@ -1,6 +1,7 @@
+import React, { useState } from "react";
 import styled from "styled-components";
 import { ModalType } from "../Home/Home";
-
+import axios from "axios";
 const Modalbody = styled.div`
     
     top:0px;
@@ -38,7 +39,7 @@ width: 800px;
     cursor:pointer;
   }
 `
-const Input =styled.div`
+const Input = styled.div`
   
   position:absolute;
   left:30%;
@@ -46,37 +47,67 @@ const Input =styled.div`
   & > label{
     font-size:2.0rem;
   }
-  
-
 `
-const InputBox = styled.input<{area:number}>`
+const InputBox = styled.input<{ area: number }>`
 
     margin-top:50px;
     width:650px;
-    height:${(props)=>props.area +"px"};
+    height:${(props) => props.area + "px"};
     font-size:1.5rem;
-    
-  
-
+    border:2px dashed black;
 `
-export default function Modal({OpenModal}:ModalType) {
+const Btn = styled.button`
+  text-align:center;
+  font-size:1.6rem;
+  display:inlnie-block;
+  width:150px;
+  position:absolute;
+  left:42%;
+  top:400px;
+  cursor:pointer;
+  background-color:white;
+  border:0px;
+`
+interface FormData {
+  title: string;
+  description: string;
+}
+export default function Modal({ OpenModal,AddPost}: ModalType) {
 
-        
-    return (
-        <Modalbody>
-            <Box>
-                <h2>고민 상자</h2>
-                <span onClick={OpenModal}>X</span>
-                <Input >
-                    <label>제목:</label>
-                    <InputBox area={50} type="text" />
-                    <br/>
-                    <label >고민:</label>
-                    <InputBox area={200} type="text"  />
-                </Input>
-            </Box>  
-        </Modalbody>
-        
-    );
+  const [title, settitle] = useState<string>("");
+  const [descript, setdescript] = useState<string>("");
+  const ChangeTitle = (event: React.FormEvent<HTMLInputElement>) => {
+    
+    settitle(event.currentTarget.value);
+  }
+  const ChangeDescript = (event: React.FormEvent<HTMLInputElement>) => {
+    
+    setdescript(event.currentTarget.value);
+  }
+  const SubmitHandler = (event:React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      AddPost(title,descript);
+      OpenModal();
+  
+  }
+  return (
+    <Modalbody>
+      
+      <Box>
+        <h2>고민 상자</h2>
+        <span onClick={OpenModal}>X</span>
+        <Input >
+          <label>제목:</label>
+          <InputBox area={50} type="text" onChange={ChangeTitle} value={title} />
+          <br />
+          <label >고민:</label>
+          <InputBox area={200} type="text" onChange={ChangeDescript} value={descript} />
+          <Btn onClick={SubmitHandler} >고민 올리기</Btn>
+        </Input>
+      </Box>
+      
+    </Modalbody>
+
+  );
 
 }

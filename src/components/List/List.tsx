@@ -15,7 +15,7 @@ const Btn =styled.div`
     font-size:1.5rem;
     cursor:pointer;
 `
-export default function List({ isLoading, isPost, postList, AddPost,OpenModal }: postType) {
+export default function List({ postList,OpenModal,AddReple }: postType) {
    
     
     return (
@@ -24,8 +24,7 @@ export default function List({ isLoading, isPost, postList, AddPost,OpenModal }:
             <Btn onClick={OpenModal}>
                 고민 털어놓기
             </Btn>
-            <StlyePost postList={postList} />
-
+            <StlyePost postList={postList} AddReple ={AddReple}/>
 
         </>
     );
