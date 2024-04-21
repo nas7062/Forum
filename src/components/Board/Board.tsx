@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { ListType } from "../Home/Home";
-import React, { useCallback, useMemo, useState } from "react";
-
+import React, { useCallback, useMemo, useState,useContext} from "react";
+import { AuthContext } from "../../firebase/AuthContext";
 const Table = styled.table`
 border-collapse: collapse;
 width: 55%;
@@ -96,6 +96,7 @@ export default function Board({ postList,AddReple}: BoardType) {
     const [clickedPostId, setClickedPostId] = useState<number | null>(null);
     const [reples,setreples] = useState<string>("");
     const [isReple,setisReple] = useState<boolean>(false);
+    const userInfo = useContext(AuthContext);
     const RepleInput = (e:React.FormEvent<HTMLInputElement>)=>{
         setreples(e.currentTarget.value);
     }
@@ -139,7 +140,7 @@ export default function Board({ postList,AddReple}: BoardType) {
                     <tr key={post.id}>
                         <td>{post.id}</td>
                         <td onClick={() => ClickHandler(post.id)}>{post.title}</td>
-                        <td>민석</td>
+                        <td>{post.name}</td>
                         <span>({CountReples(post)})</span>
                         
                     </tr>
