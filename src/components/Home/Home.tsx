@@ -49,7 +49,7 @@ export default function Home()
         {id : 3, title : "드라마를 보고..", name: "눈물의*****" ,descript :`눈물의여왕 너무 재밌어요 꼭 다들 보셨으면 해요`, reples :["재밋겠네요","저도 매주 챙겨봐요","다음주도 기대되요!"]},
     ];
     
-    const [postList,setpostList] = useState<ListType[]>(JSON.parse(localStorage.getItem("PostData") || '{}') || initialPostList);
+    const [postList,setpostList] = useState<ListType[]>(JSON.parse(localStorage.getItem("PostData") || '[]') || initialPostList);
     const [isModal,setisModal] = useState<boolean>(false);
     
     const AddPost = (title:string,descript:string,) =>{
