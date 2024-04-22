@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ListType } from "../Home/Home";
-import React, { useCallback, useMemo, useState,useContext} from "react";
+import React, { useCallback, useMemo, useState, useContext } from "react";
 import { AuthContext } from "../../firebase/AuthContext";
 const Table = styled.table`
 border-collapse: collapse;
@@ -77,7 +77,10 @@ const Box2 = styled.div`
         padding-bottom:10px;
         font-size:1.2em;   
     }
-   
+    & > span{
+        cursor:pointer;
+    }
+    
 `
 const Reple = styled.div`
 
@@ -87,45 +90,50 @@ const Reple = styled.div`
 & > input {
     display:inline;
 }
+& > button{
+    cursor:pointer;
+}
 `
 interface BoardType {
     postList: ListType[];
-    AddReple :(id:number,reples:string)=>void;
+    AddReple: (id: number, reples: string) => void;
 }
-export default function Board({ postList,AddReple}: BoardType) {
+export default function Board({ postList, AddReple }: BoardType) {
     const [clickedPostId, setClickedPostId] = useState<number | null>(null);
-    const [reples,setreples] = useState<string>("");
-    const [isReple,setisReple] = useState<boolean>(false);
+    const [reples, setreples] = useState<string>("");
+    const [isReple, setisReple] = useState<boolean>(false);
     const userInfo = useContext(AuthContext);
-    const RepleInput = (e:React.FormEvent<HTMLInputElement>)=>{
+    const RepleInput = (e: React.FormEvent<HTMLInputElement>) => {
         setreples(e.currentTarget.value);
     }
-    const OpenReple= useCallback(()=>
-        {  
-            setisReple(!isReple);
-        },[isReple]);
+    const OpenReple = useCallback(() => {
+        setisReple(!isReple);
+    }, [isReple]);
     const ClickHandler = (postId: number) => {
         setClickedPostId(clickedPostId === postId ? null : postId);
     }
-    const CountReples = (post:ListType | undefined)=>{
+    const CountReples = (post: ListType | undefined) => {
         return post ? post.reples?.length : 0;
     }
     const replesCount = useMemo(() => {
         if (clickedPostId !== null) {
-          const clickedPost = postList.find(post => post.id === clickedPostId);
-          if (clickedPost) {
-            return CountReples(clickedPost);
-          }
+            const clickedPost = postList.find(post => post.id === clickedPostId);
+            if (clickedPost) {
+                return CountReples(clickedPost);
+            }
         }
         return 0;
-      }, [clickedPostId, postList]);
-    const SubmitHandler = (event:React.MouseEvent<HTMLButtonElement>) => {
+    }, [clickedPostId, postList]);
+    const SubmitHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
+        if (!userInfo) {
+            return;
+        }
         if (clickedPostId !== null) {
             AddReple(clickedPostId, reples); // 게시물의 ID와 댓글 내용을 함께 전달
         }
         setreples("");
-    
+
     }
     return (
 
@@ -142,37 +150,34 @@ export default function Board({ postList,AddReple}: BoardType) {
                         <td onClick={() => ClickHandler(post.id)}>{post.title}</td>
                         <td>{post.name}</td>
                         <span>({CountReples(post)})</span>
-                        
-                    </tr>
-                    {clickedPostId === post.id && 
-                    (<>
-                    <Box>
-                        <span>{post.descript}</span>
-                        
-                        </Box>
-                    
-                    <Box2>
-                    <span onClick={OpenReple}>댓글달기</span>
-                        {isReple && ( <Reple><label> 댓글:</label>
-                        <input type="text" onChange={RepleInput} value ={reples} />
-                        <button onClick={SubmitHandler}>댓글달기</button> 
-                        </Reple>  )       
-                        }
-                    {post.reples?.map((reple,index)=>(
-                        <p key={index}>{reple}</p>
 
-                    ))}
-                    
-                    </Box2>
-                    
-                    </>
-                    
-                    )}
-                    
-                       
+                    </tr>
+                    {clickedPostId === post.id &&
+                        (<>
+                            <Box>
+                                <span>{post.descript}</span>
+                            </Box>
+                            <Box2>
+                                <span onClick={OpenReple}>댓글달기</span>
+                                {isReple && (<Reple><label> 댓글:</label>
+                                    <input type="text" onChange={RepleInput} value={reples} />
+                                    <button onClick={SubmitHandler}>댓글달기</button>
+                                </Reple>)
+                                }
+                                {post.reples?.map((reple, index) => (
+                                    <p key={index}>{reple}</p>
+                                ))}
+
+                            </Box2>
+
+                        </>
+
+                        )}
+
+
                 </>
             ))}
-            
+
 
 
         </Table>

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { ModalType } from "../Home/Home";
 import axios from "axios";
+import { AuthContext } from "../../firebase/AuthContext";
 const Modalbody = styled.div`
     
     top:0px;
@@ -74,6 +75,7 @@ interface FormData {
 }
 export default function Modal({ OpenModal,AddPost}: ModalType) {
 
+  const userInfo = useContext(AuthContext);
   const [title, settitle] = useState<string>("");
   const [descript, setdescript] = useState<string>("");
   const ChangeTitle = (event: React.FormEvent<HTMLInputElement>) => {
@@ -86,6 +88,10 @@ export default function Modal({ OpenModal,AddPost}: ModalType) {
   }
   const SubmitHandler = (event:React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
+      if(!userInfo)
+        {
+          return;
+        }
       AddPost(title,descript);
       OpenModal();
   
