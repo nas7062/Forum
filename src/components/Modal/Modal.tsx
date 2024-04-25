@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { ModalType } from "../Home/Home";
-import axios from "axios";
 import { AuthContext } from "../../firebase/AuthContext";
 const Modalbody = styled.div`
     
@@ -69,36 +68,31 @@ const Btn = styled.button`
   background-color:white;
   border:0px;
 `
-interface FormData {
-  title: string;
-  description: string;
-}
-export default function Modal({ OpenModal,AddPost}: ModalType) {
+export default function Modal({ OpenModal, AddPost }: ModalType) {
 
   const userInfo = useContext(AuthContext);
   const [title, settitle] = useState<string>("");
   const [descript, setdescript] = useState<string>("");
-  const ChangeTitle = (event: React.FormEvent<HTMLInputElement>) => {
-    
+  const ChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+
     settitle(event.currentTarget.value);
   }
-  const ChangeDescript = (event: React.FormEvent<HTMLInputElement>) => {
-    
+  const ChangeDescript = (event: React.ChangeEvent<HTMLInputElement>) => {
+
     setdescript(event.currentTarget.value);
   }
-  const SubmitHandler = (event:React.MouseEvent<HTMLButtonElement>) => {
-      event.preventDefault();
-      if(!userInfo)
-        {
-          return;
-        }
-      AddPost(title,descript);
-      OpenModal();
-  
+  const SubmitHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    if (!userInfo) {
+      return;
+    }
+    AddPost(title, descript);
+    OpenModal();
+
   }
   return (
     <Modalbody>
-      
+
       <Box>
         <h2>고민 상자</h2>
         <span onClick={OpenModal}>X</span>
@@ -111,7 +105,7 @@ export default function Modal({ OpenModal,AddPost}: ModalType) {
           <Btn onClick={SubmitHandler} >고민 올리기</Btn>
         </Input>
       </Box>
-      
+
     </Modalbody>
 
   );

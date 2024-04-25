@@ -26,9 +26,9 @@ const Head = styled.h2`
 `
 export default function Header()
 {   
-    const userInfo = useContext(AuthContext);
+    const userInfo = useContext(AuthContext); // 사용자정보(로그인확인)
     const LogoutHandler =()=>{
-        signOut(auth);
+        signOut(auth);  // 사용자 로그아웃
     }
     return(
         <Head>

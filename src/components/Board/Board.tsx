@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ListType } from "../Home/Home";
-import React, { useCallback, useMemo, useState, useContext } from "react";
+import React, { useCallback, useState, useContext } from "react";
 import { AuthContext } from "../../firebase/AuthContext";
 const Table = styled.table`
 border-collapse: collapse;
@@ -103,7 +103,7 @@ export default function Board({ postList, AddReple }: BoardType) {
     const [reples, setreples] = useState<string>("");
     const [isReple, setisReple] = useState<boolean>(false);
     const userInfo = useContext(AuthContext);
-    const RepleInput = (e: React.FormEvent<HTMLInputElement>) => {
+    const RepleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         setreples(e.currentTarget.value);
     }
     const OpenReple = useCallback(() => {
@@ -115,26 +115,16 @@ export default function Board({ postList, AddReple }: BoardType) {
     const CountReples = (post: ListType | undefined) => {
         return post ? post.reples?.length : 0;
     }
-    const replesCount = useMemo(() => {
-        if (clickedPostId !== null) {
-            const clickedPost = postList.find(post => post.id === clickedPostId);
-            if (clickedPost) {
-                return CountReples(clickedPost);
-            }
-        }
-        return 0;
-    }, [clickedPostId, postList]);
+    
     const SubmitHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        if (!userInfo) {
-            return;
-        }
+        if (!userInfo)   return;
         if (clickedPostId !== null) {
             AddReple(clickedPostId, reples); // 게시물의 ID와 댓글 내용을 함께 전달
         }
         setreples("");
-
-    }
+    };
+    
     return (
 
         <Table>

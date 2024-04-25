@@ -1,6 +1,6 @@
-import { createUserWithEmailAndPassword,signInWithEmailAndPassword } from "@firebase/auth";
-import { AuthContext } from "../../firebase/AuthContext";
-import React, { useState, useContext } from "react";
+import { createUserWithEmailAndPassword,
+signInWithEmailAndPassword } from "@firebase/auth";
+import React, { useState} from "react";
 import { auth } from "../../firebase/firebase";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
@@ -50,11 +50,10 @@ const Btn = styled.button`
 `
 
 export default function Join() {
-    const userInfo = useContext(AuthContext);
-    const [email, setemail] = useState<string>("");
+    const [email, setemail] = useState<string>(""); 
     const [password, setpassword] = useState<string>("");
-    const [isCreate, setisCreate] = useState<boolean>(false);
-    const Navigate = useNavigate();
+    const [isCreate, setisCreate] = useState<boolean>(false); //회원가입 상태와 로그인 상태 변경 
+    const Navigate = useNavigate(); //페이지 이동
     const NameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         setemail(e.target.value);
@@ -65,12 +64,12 @@ export default function Join() {
     }
     const JoinHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setisCreate((prev) => !prev);
+        setisCreate((prev) => !prev); 
     }
     const JoinSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (isCreate) {
-            createUserWithEmailAndPassword(auth, email, password)
+        if (isCreate) { //회원가입 모드인 경우
+            createUserWithEmailAndPassword(auth, email, password)// Firebase에 이메일과 비밀번호로 사용자 생성 요청하는 함수
             .then(() => {
                     alert("회원가입 성공");
                 })
@@ -79,10 +78,10 @@ export default function Join() {
                 })
         }
         else{
-            signInWithEmailAndPassword(auth,email,password)
+            signInWithEmailAndPassword(auth,email,password)// Firebase에 이메일과 비밀번호로 로그인 요청하는 함수
             .then(()=>{
                 alert("로그인 성공");
-                Navigate("/");
+                Navigate("/"); //메인페이지 이동
             })
             .catch(e=>{
                 alert(e);
