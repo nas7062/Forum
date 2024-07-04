@@ -26,36 +26,33 @@
 <div>
     <h2>화면 구성</h2>
       <h3>메인페이지</h3>
-  <img width="500" height="300" src ="https://github.com/nas7062/redux-shopping/assets/84384915/589dfffb-d365-4801-ab05-1a0bbfa2f12b"/>
-    <h3>상세페이지</h3>
-  <img width="500" height="300" src ="https://github.com/nas7062/redux-shopping/assets/84384915/771e5406-0962-4f0b-9304-58eaf7b15adb"/>
-  <h3>장바구니
-  <img width="500" height="300" src ="https://github.com/nas7062/redux-shopping/assets/84384915/69cbc8c6-9c9b-4768-a97f-9ea9a1afa2d6"/>
- <h3>상품목록</h3>
-  <img width="500" height="300" src ="https://github.com/nas7062/redux-shopping/assets/84384915/a39083f7-1bb7-41a2-b74e-cb3720592177"/>
+  <img width="500" height="300" src ="https://github.com/nas7062/Forum/assets/84384915/6d385968-8569-4378-9090-98eda48caadf"/>
+    <h3>작성페이지</h3>
+  <img width="500" height="300" src ="https://github.com/nas7062/Forum/assets/84384915/31f8cb50-b362-4747-9851-fe197735869c"/>
+  <h3>로그인창</h3>
+  <img width="500" height="300" src ="https://github.com/nas7062/Forum/assets/84384915/e6d09485-1d8e-41d2-9cec-276846ad854f"/>
+ <h3>게시글 및 댓글창</h3>
+  <img width="500" height="300" src ="https://github.com/nas7062/Forum/assets/84384915/70366673-7cad-4ea9-97e2-33d50c31dc95"/>
 </div>
 <div>
   <h2>주요기능</h2>
   
 ### 회원 (User)
-회원가입 / 로그인/ 로그아웃/
+FireBase/회원가입 / 로그인/ 로그아웃/
   
-### 상품 (Item)
-상품 리스트 (메인페이지, 카테고리별 페이지) / 상품 상세 페이지 / 상품 정렬
+### 작성페이지 (Input)
+작성: 제목/고민 
 
-### 장바구니 (Cart)
-장바구니 담기 / 장바구니 조회 / 장바구니 삭제
+### 디테일 페이지 (detail)
+고민과 댓글창
 
 </div>
 <div>
   <h2>느낀점</h2>
-  <p>   React를 이용하여프로젝트를 진행하면서 데이터를 사용하고자 하는 </p>
-  <p>   자식 컴포넌트에게 불필요하게 많은 Props를 전달해야 하는 상황을 겪게 되었습니다.</p>
-<p>이런 경험을 통해 "전역 상태 관리"의 필요성을 체감하게 되었습니다.</p>
- <p> 그 후에 Redux를 공부하고 사용해보며 전역 상태관리의 장점을 알게 되었고</p>
-   <p>컴포넌트의 구조가 평평해졌고 데이터 전달을 위한 복잡한 계층 구조가 필요하지 않게 되었습니다.</p>
-   <p>또한 컴포넌트에 상태 업데이트 함수등을 선언하지 않아도 되어 코드의 가독성이 높아지게 됩니다.</p>
-   <p>Session Storage를 사용해 보았고 Local Storage와의 차이점을 알게 되었습니다.</p>
+   <p>TypeScript를 공부하고 처음하는 프로젝트 이기 때문에 가벼운 프로젝트를 선택하였고</p>
+   <p>변수와 함수에 Interface를 통해 Type을 지정하여 </p>
+   <p> 개발 단계에서 에러를 발견할 수 있어 안정성이 높아짐을 알게 되었습니다.</p>
+    <p>또한 Firebase를 통하여 로그인 및 회원가입을 구현해 보았고 빠르고 쉬운 장점이 잇었습니다.</p>
 </div>
     
 </div>
