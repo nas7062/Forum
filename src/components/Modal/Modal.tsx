@@ -83,6 +83,10 @@ export default function Modal({ OpenModal, AddPost }: ModalType) {
   }
   const SubmitHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    if (!title.trim() || !descript.trim()) {
+      alert("제목과 설명을 모두 작성해 주세요.");
+      return;
+  }
     if (!userInfo) {
       return;
     }
@@ -92,7 +96,6 @@ export default function Modal({ OpenModal, AddPost }: ModalType) {
   }
   return (
     <Modalbody>
-
       <Box>
         <h2>고민 상자</h2>
         <span onClick={OpenModal}>X</span>
